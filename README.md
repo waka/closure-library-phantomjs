@@ -19,12 +19,12 @@ RUNNING EXAMPLES
 
 ### Prepare
 
-  $ git clone git@github.com:waka/js-closurelibrary-unittest-tap.git
-  $ cd js-closurelibrary-unittest-tap
-  $ git submodule update --init
+    $ git clone git@github.com:waka/js-closurelibrary-unittest-tap.git
+    $ cd js-closurelibrary-unittest-tap
+    $ git submodule update --init
 
 ### To run with PhantomJS
 
-  # assume you have built and installed phantomjs
-  $ cd ./sample
-  $ phantomjs run_test.js test/ui/textarea_test.html
+    # assume you have built and installed phantomjs
+    $ cd ./sample
+    $ phantomjs run_test.js test/ui/textarea_test.html
