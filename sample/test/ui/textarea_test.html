@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Closure Unit Tests - ui.Textarea</title>
+    <script>
+      var CLOSURE_BASE_PATH = '../';
+    </script>
+    <script src="../../../vendor/google-closure-library/closure/goog/base.js"></script>
+    <script>
+      goog.require('ui.Textarea');
+      goog.require('goog.dom');
+      goog.require('goog.testing.jsunit');
+    </script>
+    <script src="../../../lib/closurelibrary-tap.js"></script>
+  </head>
+  <body>
+    <div id="target"></div>
+
+    <script>
+      function testTextareaValue() {
+          var el = goog.dom.getElement('target');
+          var textarea = new ui.Textarea('abc');
+          textarea.render(el);
+
+          assertEquals('abc', textarea.getValue());
+          textarea.setValue('def');
+          assertEquals('def', textarea.getValue());
+          textarea.dispose();
+      }
+
+      function tearDownPage() {
+          var el = goog.dom.getElement('target');
+          goog.dom.removeChildren(el);
+      }
+    </script>
+  </body>
+</html>
