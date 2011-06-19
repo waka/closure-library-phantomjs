@@ -11,6 +11,7 @@ ui.Textarea = function(opt_value) {
     goog.ui.Component.call(this);
     this.value_ = opt_value || '';
 };
+goog.inherits(ui.Textarea, goog.ui.Component);
 
 /**
  * @inheritDoc

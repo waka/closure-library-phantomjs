@@ -25,6 +25,8 @@ RUNNING EXAMPLES
 
 ### To run with PhantomJS
 
-    # assume you have built and installed phantomjs and set $PATH
+    # assume you have built and installed phantomjs
+    # And you will type the following command to create deps.js
+    $ python vendor/google-closure-library/closure/bin/build/depswriter.py --output_file=deps.js --root_with_prefix="sample ../../../../sample"
     $ cd ./sample
     $ phantomjs run_test.js test/ui/textarea_test.html
