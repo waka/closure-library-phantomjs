@@ -25,6 +25,6 @@ RUNNING EXAMPLES
 
 ### To run with PhantomJS
 
-    # assume you have built and installed phantomjs
+    # assume you have built and installed phantomjs and set $PATH
     $ cd ./sample
     $ phantomjs run_test.js test/ui/textarea_test.html
