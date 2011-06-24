@@ -23,10 +23,13 @@ RUNNING EXAMPLES
     $ cd js-closurelibrary-unittest-tap
     $ git submodule update --init
 
-### To run with PhantomJS
+### To run sample test script with PhantomJS
 
     # assume you have built and installed phantomjs
     # And you will type the following command to create deps.js
     $ python vendor/google-closure-library/closure/bin/build/depswriter.py --output_file=deps.js --root_with_prefix="sample ../../../../sample"
     $ cd ./sample
+    # Run all test scripts
+    $ phantomjs run_test.js test/all_tests.html
+    # If you run single test script
     $ phantomjs run_test.js test/ui/textarea_test.html
