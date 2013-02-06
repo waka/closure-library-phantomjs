@@ -1,0 +1,11 @@
+node_modules
+npm-debug.log
+
+.git
+.gitignore
+
+*~
+._*
+*.swp
+Thumbs.db
+.DS_Store

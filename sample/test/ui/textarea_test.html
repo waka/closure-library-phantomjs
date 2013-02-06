@@ -10,26 +10,24 @@
       goog.require('goog.dom');
       goog.require('goog.testing.jsunit');
     </script>
-    <script src="../../../lib/closurelibrary-tap.js"></script>
   </head>
   <body>
     <div id="target"></div>
-
     <script>
       function testTextareaValue() {
-          var el = goog.dom.getElement('target');
-          var textarea = new ui.Textarea('abc');
-          textarea.render(el);
+        var el = goog.dom.getElement('target');
+        var textarea = new ui.Textarea('abc');
+        textarea.render(el);
 
-          assertEquals('abc', textarea.getValue());
-          textarea.setValue('def');
-          assertEquals('def', textarea.getValue());
-          textarea.dispose();
+        assertEquals('abc', textarea.getValue());
+        textarea.setValue('def');
+        assertEquals('def', textarea.getValue());
+        textarea.dispose();
       }
 
       function tearDownPage() {
-          var el = goog.dom.getElement('target');
-          goog.dom.removeChildren(el);
+        var el = goog.dom.getElement('target');
+        goog.dom.removeChildren(el);
       }
     </script>
   </body>

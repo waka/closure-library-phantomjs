@@ -1,4 +1,5 @@
 //
 var _allTests = [
-    "ui/textarea_test.html"
+  "ui/input_test.html",
+  "ui/textarea_test.html"
 ];

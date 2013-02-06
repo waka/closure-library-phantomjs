@@ -1,0 +1,20 @@
+{
+  "name": "closure-library-phantomjs",
+  "description": "Testing with PhantomJS for Google Closure Library.",
+  "version": "0.1.0",
+  "author": "Yoshimasa Wakahara <y.wakahara@gmail.com>",
+  "license": "MIT-License",
+  "keywords": ["test", "closure-library", "phantomjs"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/waka/closure-library-phantomjs.git"
+  },
+  "bin": {
+    "closure-library-phantomjs": "./bin/closure-library-phantomjs"
+  },
+  "engines": "*",
+  "dependencies": {
+    "commander": ">= 1.1.x",
+    "phantomjs": ">= 1.7.x"
+  }
+}

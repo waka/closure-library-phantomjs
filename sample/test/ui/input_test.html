@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Closure Unit Tests - ui.Input</title>
+    <script src="../../../vendor/google-closure-library/closure/goog/base.js"></script>
+    <script src="../../../deps.js"></script>
+    <script>
+      goog.require('ui.Input');
+      goog.require('goog.dom');
+      goog.require('goog.testing.jsunit');
+    </script>
+  </head>
+  <body>
+    <div id="target"></div>
+    <script>
+      var input;
+
+      function testInputRendered() {
+        var el = goog.dom.getElement('target');
+        input = new ui.Input('abc');
+        input.render(el);
+
+        //assertTrue(input.isInDocument());
+        assertFalse(input.isInDocument());
+      }
+
+      function testInputValue() {
+        var el = goog.dom.getElement('target');
+        input = new ui.Input('abc');
+        input.render(el);
+
+        assertEquals('abc', input.getValue());
+        input.setValue('def');
+        assertEquals('def', input.getValue());
+      }
+
+      function tearDownPage() {
+        input && input.dispose();
+        var el = goog.dom.getElement('target');
+        goog.dom.removeChildren(el);
+      }
+    </script>
+  </body>
+</html>

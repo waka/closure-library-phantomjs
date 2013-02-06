@@ -1,0 +1,176 @@
+#!/usr/bin/env node
+
+'use strict';
+
+
+/**
+ * Module dependencies.
+ */
+
+var program = require('commander');
+var spawn = require('child_process').spawn;
+var fs = require('fs');
+var path = require('path');
+var util = require('util');
+
+
+/**
+ * Utilities.
+ */
+
+var cookies = null;
+var headers = null;
+var settings = null;
+
+function set(val, obj) {
+  var vals = val.split('=');
+  if (vals[1] === 'true') {
+    vals[1] = true;
+  } else if (vals[1] === 'false') {
+    vals[1] = false;
+  }
+  if (!obj) {
+    obj = {};
+  }
+  obj[vals[0]] = vals[1];
+  return vals;
+}
+
+function cookie(val) {
+  return set(val, cookies);
+}
+
+function header(val) {
+  return set(val, headers);
+}
+
+function setting(val) {
+  return set(val, settings);
+}
+
+function viewport(val) {
+  var vals = val.split('x');
+  return {
+    width: parseFloat(vals[0]),
+    height: parseFloat(vals[1])
+  };
+}
+
+
+/**
+ * Build command line options.
+ */
+
+program
+  .version(require('../package.json').version)
+  .usage('[options] test_file')
+  .option('-r, --reporter <name>', 'specify the test reporter (spec|tap|dot)', 'spec')
+  .option('-t, --timeout <timeout>', 'specify the phantomjs timeout to use', parseInt, 600000)
+  .option('--cookie <name>=<value>', 'specify cookie', cookie)
+  .option('--header <name>=<value>', 'specify custom header', header)
+  .option('--setting <key>=<value>', 'specify specific phantom settings', setting)
+  .option('--view <width>x<height>', 'specify phantom viewport size', viewport);
+
+
+/**
+ * Banner of help.
+ */
+
+program.on('--help', function() {
+  console.log('');
+  console.log('  Examples:');
+  console.log('');
+  console.log('    $ closure-library-phantomjs -r tap /test/all_test.html');
+  console.log('    $ closure-library-phantomjs http://testserver.com/all_test.html');
+  console.log('');
+});
+
+
+/**
+ * Get options!
+ */
+
+program.parse(process.argv);
+
+if (!program.args.length) {
+  program.help();
+  process.exit(1);
+}
+
+
+/**
+ * Initialize configurations.
+ */
+
+var script = fs.realpathSync(
+  path.join(__dirname, '../lib/closure-library-phantomjs.js'));
+
+var reporter = program.reporter;
+
+var page = function() {
+  var arg = program.args[0];
+  if (arg.match(/file:\/\//)) {
+    return arg;
+  }
+  if (arg.match(/http:\/\//)) {
+    return arg;
+  }
+  if (arg.match(/https:\/\//)) {
+    return arg;
+  }
+  if (fs.existsSync(arg)) {
+    return arg;
+  }
+  var file = process.cwd() + '/' + arg;
+  if (fs.existsSync(file)) {
+    return fs.realpathSync(file);
+  }
+  return arg;
+}();
+
+var config = JSON.stringify({
+  cookies: cookies,
+  headers: headers,
+  settings: settings,
+  timeout: program.timeout,
+  viewportSize: program.view
+});
+
+
+/**
+ * Run with PhantomJS.
+ */
+
+var phantomjs;
+var spawnArgs = [script, page, reporter, config];
+
+// Attempt from installed as global module
+for (var i=0; i < module.paths.length; i++) {
+  var bin = path.join(module.paths[i], './bin/phantomjs');
+  if (process.platform === 'win32') {
+    bin += '.cmd';
+  }
+  if (fs.existsSync(bin)) {
+    phantomjs = spawn(bin, spawnArgs);
+    break;
+  }
+}
+// Attempt from installed as local module
+if (phantomjs === undefined) {
+  var localBin = path.join(__dirname,
+    '../node_modules/phantomjs/bin/phantomjs');
+  phantomjs = spawn(localBin, spawnArgs);
+}
+
+// Display test results
+phantomjs.stdout.on('data', function(data) {
+  util.print(data.toString());
+})
+
+// Oops
+phantomjs.on('exit', function(code) {
+  if (code === 127) {
+    util.print("Perhaps phantomjs is not installed?\n");
+  }
+  process.exit(code);
+})

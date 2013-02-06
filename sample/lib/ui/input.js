@@ -1,4 +1,4 @@
-goog.provide('ui.Textarea');
+goog.provide('ui.Input');
 
 goog.require('goog.ui.Component');
 
@@ -7,19 +7,21 @@ goog.require('goog.ui.Component');
  * @constructor
  * @extends {goog.ui.Component}
  */
-ui.Textarea = function(opt_value) {
+ui.Input = function(opt_value) {
   goog.ui.Component.call(this);
   this.value_ = opt_value || '';
 };
-goog.inherits(ui.Textarea, goog.ui.Component);
+goog.inherits(ui.Input, goog.ui.Component);
 
 /**
  * @override
  */
-ui.Textarea.prototype.createDom = function() {
+ui.Input.prototype.createDom = function() {
   var dom = this.getDomHelper();
-  var el = dom.createDom('textarea', {
-    'className': 'ui-textarea'
+  var el = dom.createDom('input', {
+    'className': 'ui-input',
+      'type': 'text',
+      'value': ''
   });
   this.setElementInternal(el);
 };
@@ -27,7 +29,7 @@ ui.Textarea.prototype.createDom = function() {
 /**
  * @override
  */
-ui.Textarea.prototype.enterDocument = function() {
+ui.Input.prototype.enterDocument = function() {
   goog.base(this, 'enterDocument');
   var el = this.getElement();
   el.value = this.value_;
@@ -36,7 +38,7 @@ ui.Textarea.prototype.enterDocument = function() {
 /**
  * @param {string} value The value string.
  */
-ui.Textarea.prototype.setValue = function(value) {
+ui.Input.prototype.setValue = function(value) {
   if (this.isInDocument()) {
     var el = this.getElement();
     el.value = value;
@@ -47,6 +49,6 @@ ui.Textarea.prototype.setValue = function(value) {
 /**
  * @return {string}
  */
-ui.Textarea.prototype.getValue = function() {
+ui.Input.prototype.getValue = function() {
   return this.value_;
 };
