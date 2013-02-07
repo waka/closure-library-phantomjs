@@ -170,7 +170,7 @@ phantomjs.stdout.on('data', function(data) {
 // Oops
 phantomjs.on('exit', function(code) {
   if (code === 127) {
-    util.print("Perhaps phantomjs is not installed?\n");
+    util.print('Perhaps phantomjs is not installed?\n');
   }
   process.exit(code);
 })
